@@ -15,7 +15,7 @@ import type {
   RouterState,
 } from './router'
 
-import type { RouteMatch } from './Matches'
+import type { MakeRouteMatch } from './Matches'
 
 const useTransition =
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -89,10 +89,10 @@ export function RouterProvider<
 
   const provider = (
     <React.Suspense fallback={null}>
-    <routerContext.Provider value={router}>
-      {matches}
-      <Transitioner />
-    </routerContext.Provider>
+      <routerContext.Provider value={router}>
+        {matches}
+        <Transitioner />
+      </routerContext.Provider>
     </React.Suspense>
   )
 
@@ -226,7 +226,7 @@ function Transitioner() {
 export function getRouteMatch<TRouteTree extends AnyRoute>(
   state: RouterState<TRouteTree>,
   id: string,
-): undefined | RouteMatch<TRouteTree> {
+): undefined | MakeRouteMatch<TRouteTree> {
   return [
     ...state.cachedMatches,
     ...(state.pendingMatches ?? []),
